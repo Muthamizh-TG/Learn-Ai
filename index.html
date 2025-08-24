@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn AI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <h1>Technology Garage</h1>
+    <button>Get Started</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>
+        <span class="highlight">Learn AI,</span><br>
+        <span class="highlight">Fast & Fun</span>
+      </h1>
+      <p>
+        A modern curriculum mixing theory, code, and real projects. 
+        Built with effects inspired by GitHub, Grok, and the best of the modern web.
+      </p>
+      <div class="buttons">
+        <button class="btn btn-primary">Start Now</button>
+        <button class="btn btn-secondary">View Repo</button>
+      </div>
+    </div>
+
+    <div class="matrix-box">
+      <canvas id="matrix"></canvas>
+    </div>
+  </section>
+
+    <div class="logo-row">
+    <div class="marquee">
+        <ul class="marquee-content">
+        <li><img src="https://cdn.simpleicons.org/github/000" alt="GitHub"></li>
+        <li><img src="https://cdn.simpleicons.org/codepen/000" alt="CodePen"></li>
+        <li><img src="https://cdn.simpleicons.org/react/000" alt="React"></li>
+        <li><img src="https://cdn.simpleicons.org/vueDotJs/000" alt="Vue"></li>
+        <li><img src="https://cdn.simpleicons.org/wordpress/000" alt="WordPress"></li>
+        <li><img src="https://cdn.simpleicons.org/android/000" alt="Android"></li>
+        </ul>
+    </div>
+    </div>
+
+    <div class="logo-row">
+    <div class="marquee reverse">
+        <ul class="marquee-content">
+        <li><img src="https://cdn.simpleicons.org/figma/000" alt="Figma"></li>
+        <li><img src="https://cdn.simpleicons.org/javascript/000" alt="JavaScript"></li>
+        <li><img src="https://cdn.simpleicons.org/docker/000" alt="Docker"></li>
+        <li><img src="https://cdn.simpleicons.org/notion/000" alt="Notion"></li>
+        <li><img src="https://cdn.simpleicons.org/jira/000" alt="Jira"></li>
+        <li><img src="https://cdn.simpleicons.org/slack/000" alt="Slack"></li>
+        </ul>
+    </div>
+    </div>
+
+
+  <div class="faq-container">
+        
+        <div class="faq-header">
+            <button class="faq-button">FAQ</button>
+            <div>
+                <h1 class="faq-title"> FAQ</h1>
+                <p class="faq-subtitle">Your most important questions regarding answered here.</p>
+            </div>
+        </div>
+
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What is Artificial Intelligence (AI)?</span>
+                    <button class="faq-toggle">&times;</button>
+                </div>
+                <div class="faq-answer">
+                    <p>Artificial Intelligence (AI) is the simulation of human intelligence in machines that are programmed to think, learn, and solve problems like humans.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What is Machine Learning?</span>
+                    <button class="faq-toggle">&times;</button>
+                </div>
+                <div class="faq-answer">
+                    <p>Machine Learning is a subset of AI that enables systems to learn from data and improve their performance without explicit programming.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What is Deep Learning?</span>
+                    <button class="faq-toggle">&times;</button>
+                </div>
+                <div class="faq-answer">
+                    <p>Deep Learning is a branch of Machine Learning that uses neural networks with many layers to analyze complex data patterns.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How can I start learning AI?</span>
+                    <button class="faq-toggle">&times;</button>
+                </div>
+                <div class="faq-answer">
+                    <p>Start with basic math (linear algebra, calculus, probability), learn Python, and explore online courses on AI and machine learning.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What programming languages are used in AI?</span>
+                    <button class="faq-toggle">&times;</button>
+                </div>
+                <div class="faq-answer">
+                    <p>Python is the most popular language for AI, but R, Java, and Julia are also used in some applications.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What are some good resources to learn AI?</span>
+                    <button class="faq-toggle">&times;</button>
+                </div>
+                <div class="faq-answer">
+                    <p>Great resources include Coursera, edX, fast.ai, DeepLearning.AI, YouTube tutorials, and books like "Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow".</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Do I need a strong math background for AI?</span>
+                    <button class="faq-toggle">&times;</button>
+                </div>
+                <div class="faq-answer">
+                    <p>A basic understanding of math helps, especially linear algebra, calculus, and probability, but many beginner courses teach the essentials as you go.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What is a neural network?</span>
+                    <button class="faq-toggle">&times;</button>
+                </div>
+                <div class="faq-answer">
+                    <p>A neural network is a computational model inspired by the human brain, consisting of layers of interconnected nodes that process data and learn patterns.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.querySelectorAll('.marquee').forEach((marquee) => {
+    const root = document.documentElement;
+    const displayed = getComputedStyle(root).getPropertyValue("--marquee-elements-displayed");
+    const content = marquee.querySelector(".marquee-content");
+
+    root.style.setProperty("--marquee-elements", content.children.length);
+
+    for (let i = 0; i < displayed; i++) {
+      content.appendChild(content.children[i].cloneNode(true));
+    }
+  });
+  </script>
+
+  </body>
+</html>

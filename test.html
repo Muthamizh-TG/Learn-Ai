@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    :root {
+  --marquee-width: 100%;
+  --marquee-height: 120px;
+  --marquee-elements-displayed: 6;
+  --marquee-element-width: calc(var(--marquee-width) / var(--marquee-elements-displayed));
+  --marquee-animation-duration: calc(var(--marquee-elements) * 3s);
+}
+
+.marquee-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.marquee {
+  width: var(--marquee-width);
+  height: var(--marquee-height);
+  background-color: #fff;
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee::before,
+.marquee::after {
+  position: absolute;
+  top: 0;
+  width: 10rem;
+  height: 100%;
+  content: "";
+  z-index: 2;
+  pointer-events: none;
+}
+
+.marquee::before {
+  left: 0;
+  background: linear-gradient(to right, #fff 0%, transparent 100%);
+}
+
+.marquee::after {
+  right: 0;
+  background: linear-gradient(to left, #fff 0%, transparent 100%);
+}
+
+.marquee-content {
+  list-style: none;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  animation: scrolling var(--marquee-animation-duration) linear infinite;
+  padding: 0;
+  margin: 0;
+}
+
+.marquee.reverse .marquee-content {
+  animation: scrolling-reverse var(--marquee-animation-duration) linear infinite;
+}
+
+@keyframes scrolling {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-1 * var(--marquee-element-width) * var(--marquee-elements)));
+  }
+}
+
+@keyframes scrolling-reverse {
+  0% {
+    transform: translateX(calc(-1 * var(--marquee-element-width) * var(--marquee-elements)));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.marquee-content li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  width: var(--marquee-element-width);
+  height: 100%;
+  padding: 1rem;
+}
+
+.marquee-content li img {
+  max-height: 60%;
+  max-width: 100%;
+  object-fit: contain;
+  filter: invert(17%) sepia(92%) saturate(6614%) hue-rotate(258deg) brightness(96%) contrast(105%);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --marquee-elements-displayed: 3;
+  }
+
+  .marquee::before,
+  .marquee::after {
+    width: 5rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="logo-row">
+  <div class="marquee">
+    <ul class="marquee-content">
+      <li><img src="https://cdn.simpleicons.org/github/000" alt="GitHub"></li>
+      <li><img src="https://cdn.simpleicons.org/codepen/000" alt="CodePen"></li>
+      <li><img src="https://cdn.simpleicons.org/react/000" alt="React"></li>
+      <li><img src="https://cdn.simpleicons.org/vueDotJs/000" alt="Vue"></li>
+      <li><img src="https://cdn.simpleicons.org/wordpress/000" alt="WordPress"></li>
+      <li><img src="https://cdn.simpleicons.org/android/000" alt="Android"></li>
+    </ul>
+  </div>
+</div>
+
+<div class="logo-row">
+  <div class="marquee reverse">
+    <ul class="marquee-content">
+      <li><img src="https://cdn.simpleicons.org/figma/000" alt="Figma"></li>
+      <li><img src="https://cdn.simpleicons.org/javascript/000" alt="JavaScript"></li>
+      <li><img src="https://cdn.simpleicons.org/docker/000" alt="Docker"></li>
+      <li><img src="https://cdn.simpleicons.org/notion/000" alt="Notion"></li>
+      <li><img src="https://cdn.simpleicons.org/jira/000" alt="Jira"></li>
+      <li><img src="https://cdn.simpleicons.org/slack/000" alt="Slack"></li>
+    </ul>
+  </div>
+</div>
+
+
+<script>
+  document.querySelectorAll('.marquee').forEach((marquee) => {
+    const root = document.documentElement;
+    const displayed = getComputedStyle(root).getPropertyValue("--marquee-elements-displayed");
+    const content = marquee.querySelector(".marquee-content");
+
+    root.style.setProperty("--marquee-elements", content.children.length);
+
+    for (let i = 0; i < displayed; i++) {
+      content.appendChild(content.children[i].cloneNode(true));
+    }
+  });
+</script>
+</body>
+</html>
