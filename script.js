@@ -1,129 +1,115 @@
-// Matrix effect
-    const canvas = document.getElementById("matrix");
-    const ctx = canvas.getContext("2d");
+const matrixRain = document.getElementById('matrixRain');
+const matrixBox = document.getElementById('matrixBox');
+const chars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-    canvas.height = 300;
-    canvas.width = 400;
+function createMatrixColumn() {
+  const column = document.createElement('div');
+  column.className = 'matrix-column';
 
-    const letters = "T E C H N O L O G Y   G A R A G E   T R I C H Y";
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
+  const columnHeight = Math.random() * 15 + 10;
+  for (let i = 0; i < columnHeight; i++) {
+    const char = document.createElement('span');
+    char.className = 'matrix-char';
+    char.textContent = chars[Math.floor(Math.random() * chars.length)];
+    column.appendChild(char);
+  }
 
-    const drops = [];
-    for (let x = 0; x < columns; x++) drops[x] = 1;
+  column.style.left = Math.random() * 100 + '%';
+  column.style.animationDuration = (Math.random() * 3 + 2) + 's';
+  column.style.animationDelay = Math.random() * 2 + 's';
 
-    function draw() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+  matrixRain.appendChild(column);
 
-      ctx.fillStyle = "#00f5d4";
-      ctx.font = fontSize + "px monospace";
+  setTimeout(() => column.remove(), 9000);
+}
 
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+for (let i = 0; i < 25; i++) {
+  setTimeout(() => createMatrixColumn(), i * 200);
+}
+setInterval(createMatrixColumn, 300);
 
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
+setInterval(() => {
+  document.querySelectorAll('.matrix-column').forEach(column => {
+    column.querySelectorAll('.matrix-char').forEach(char => {
+      if (Math.random() < 0.1) {
+        char.textContent = chars[Math.floor(Math.random() * chars.length)];
       }
-    }
-
-    setInterval(draw, 40);
-    // Auto year
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Reveal cards on scroll (for old section)
-    const cards = document.querySelectorAll(".card");
-    const revealOnScroll = () => {
-      cards.forEach(card => {
-        const rect = card.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 50) {
-          card.classList.add("visible");
-        }
-      });
-    };
-    window.addEventListener("scroll", revealOnScroll);
-    revealOnScroll();
-
-    // Floating particles
-    for (let i = 0; i < 30; i++) {
-      const particle = document.createElement("div");
-      particle.className = "particle";
-      const size = Math.random() * 6 + 2;
-      particle.style.width = `${size}px`;
-      particle.style.height = `${size}px`;
-      particle.style.left = `${Math.random() * 100}vw`;
-      particle.style.animationDuration = `${Math.random() * 10 + 5}s`;
-      document.body.appendChild(particle);
-    }
-
-    // Card Slider Logic
-    const sliderTrack = document.querySelector('.slider-track');
-    const sliderCards = document.querySelectorAll('.slider-card');
-    const leftArrow = document.querySelector('.slider-arrow.left');
-    const rightArrow = document.querySelector('.slider-arrow.right');
-    let currentIndex = 0;
-    const visibleCards = window.innerWidth < 600 ? 1 : 2;
-
-    function updateSlider() {
-      const cardWidth = sliderCards[0].offsetWidth + 30; // gap
-      sliderTrack.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-    }
-    leftArrow.addEventListener('click', () => {
-      currentIndex = Math.max(0, currentIndex - 1);
-      updateSlider();
     });
-    rightArrow.addEventListener('click', () => {
-      currentIndex = Math.min(sliderCards.length - visibleCards, currentIndex + 1);
-      updateSlider();
+  });
+}, 120);
+
+// Subtle tilt effect for UX
+document.addEventListener('mousemove', e => {
+  const x = (e.clientX / window.innerWidth - 0.5) * 8;
+  const y = (e.clientY / window.innerHeight - 0.5) * 8;
+  matrixBox.style.transform = `rotateX(${y}deg) rotateY(${x}deg)`;
+});
+
+
+//cursor effect
+
+const cursor = document.querySelector(".cursor");
+
+document.addEventListener("mousemove", (e) => {
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
+  cursor.style.opacity = "1"; // show when mouse inside
+});
+
+document.addEventListener("mouseleave", () => {
+  cursor.style.opacity = "0"; // hide when mouse leaves page
+});
+
+document.addEventListener("mouseenter", () => {
+  cursor.style.opacity = "1"; // show again when mouse comes back
+});
+
+
+// FAQ Section
+document.addEventListener('DOMContentLoaded', () => {
+  const grid = document.getElementById('ai-faq');
+
+  grid.addEventListener('click', (e) => {
+    const btn = e.target.closest('.ai-toggle');
+    if (!btn) return;
+
+    const card = btn.parentElement;
+    const panel = card.querySelector('.ai-panel');
+    const isOpen = card.classList.contains('active');
+
+    // Close other cards
+    grid.querySelectorAll('.ai-card.active').forEach(openCard => {
+      if (openCard === card) return;
+      collapse(openCard.querySelector('.ai-panel'), openCard);
     });
-    window.addEventListener('resize', () => {
-      updateSlider();
+
+    // Toggle clicked card
+    if (isOpen) {
+      collapse(panel, card);
+    } else {
+      expand(panel, card);
+    }
+  });
+
+  function collapse(panel, card) {
+    panel.style.height = panel.scrollHeight + 'px';
+    requestAnimationFrame(() => { panel.style.height = '0px'; });
+    card.classList.remove('active');
+    card.querySelector('.ai-toggle').setAttribute('aria-expanded', 'false');
+  }
+
+  function expand(panel, card) {
+    panel.style.height = panel.scrollHeight + 'px';
+    panel.addEventListener('transitionend', function onEnd(ev) {
+      if (ev.propertyName === 'height') {
+        panel.style.height = 'auto';
+        panel.removeEventListener('transitionend', onEnd);
+      }
     });
-    updateSlider();
+    card.classList.add('active');
+    card.querySelector('.ai-toggle').setAttribute('aria-expanded', 'true');
+  }
 
-    function toggleFAQ(element) {
-            const answer = element.nextElementSibling;
-            const toggle = element.querySelector('.faq-toggle');
-            const isOpen = answer.classList.contains('open');
-            
-            // Close all other FAQs
-            document.querySelectorAll('.faq-answer').forEach(ans => {
-                ans.classList.remove('open');
-            });
-            document.querySelectorAll('.faq-toggle').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Toggle current FAQ
-            if (!isOpen) {
-                answer.classList.add('open');
-                toggle.classList.add('active');
-            }
-        }
-
-        function closeFAQ() {
-            // You can customize this function to hide the FAQ or redirect
-            console.log('Close FAQ clicked');
-            // For demo purposes, just hide the container
-            document.querySelector('.faq-container').style.opacity = '0.5';
-            setTimeout(() => {
-                document.querySelector('.faq-container').style.display = 'none';
-            }, 300);
-        }
-
-        // Close FAQ when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.faq-item') && !e.target.closest('.faq-button') && !e.target.closest('.close-btn')) {
-                document.querySelectorAll('.faq-answer').forEach(ans => {
-                    ans.classList.remove('open');
-                });
-                document.querySelectorAll('.faq-toggle').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-            }
-        });
-
-
+  // Start all closed
+  document.querySelectorAll('.ai-panel').forEach(p => { p.style.height = '0px'; });
+});

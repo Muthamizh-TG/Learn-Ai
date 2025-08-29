@@ -1,155 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Knowledge Center</title>
   <style>
-    :root {
-  --marquee-width: 100%;
-  --marquee-height: 120px;
-  --marquee-elements-displayed: 6;
-  --marquee-element-width: calc(var(--marquee-width) / var(--marquee-elements-displayed));
-  --marquee-animation-duration: calc(var(--marquee-elements) * 3s);
-}
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      background-color: #0d0d0d;
+      color: #fff;
+    }
 
-.marquee-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
+    .ai-knowledge-section {
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+    }
 
-.marquee {
-  width: var(--marquee-width);
-  height: var(--marquee-height);
-  background-color: #fff;
-  overflow: hidden;
-  position: relative;
-}
+    .ai-container {
+      max-width: 1200px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+    }
 
-.marquee::before,
-.marquee::after {
-  position: absolute;
-  top: 0;
-  width: 10rem;
-  height: 100%;
-  content: "";
-  z-index: 2;
-  pointer-events: none;
-}
+    .ai-header { text-align: center; margin-bottom: 40px; }
+    .ai-header h1 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 700;
+    }
+    .ai-header .subtitle {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: #b0b0b0;
+      margin-top: 10px;
+      font-weight: 300;
+    }
 
-.marquee::before {
-  left: 0;
-  background: linear-gradient(to right, #fff 0%, transparent 100%);
-}
+    .ai-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
 
-.marquee::after {
-  right: 0;
-  background: linear-gradient(to left, #fff 0%, transparent 100%);
-}
+    .ai-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
 
-.marquee-content {
-  list-style: none;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  animation: scrolling var(--marquee-animation-duration) linear infinite;
-  padding: 0;
-  margin: 0;
-}
+    .ai-toggle {
+      width: 100%; padding: 20px;
+      background: transparent; border: none; color: #fff;
+      font-weight: 600; text-align: left; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: color .25s ease;
+    }
+    .ai-toggle:hover { color: #87ceeb; }
 
-.marquee.reverse .marquee-content {
-  animation: scrolling-reverse var(--marquee-animation-duration) linear infinite;
-}
+    .ai-icon {
+      font-size: 1.5rem; font-weight: 300;
+      transition: transform .25s ease, color .25s ease; color: #87ceeb;
+    }
+    .ai-card.active .ai-icon { transform: rotate(45deg); color: #1e90ff; }
 
-@keyframes scrolling {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(calc(-1 * var(--marquee-element-width) * var(--marquee-elements)));
-  }
-}
+    .ai-panel {
+      height: 0; overflow: hidden;
+      background: rgba(0, 0, 0, 0.2);
+      transition: height .35s ease;
+    }
+    .ai-panel .ai-inner { padding: 20px; box-sizing: border-box; }
 
-@keyframes scrolling-reverse {
-  0% {
-    transform: translateX(calc(-1 * var(--marquee-element-width) * var(--marquee-elements)));
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-.marquee-content li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  width: var(--marquee-element-width);
-  height: 100%;
-  padding: 1rem;
-}
-
-.marquee-content li img {
-  max-height: 60%;
-  max-width: 100%;
-  object-fit: contain;
-  filter: invert(17%) sepia(92%) saturate(6614%) hue-rotate(258deg) brightness(96%) contrast(105%);
-}
-
-@media (max-width: 768px) {
-  :root {
-    --marquee-elements-displayed: 3;
-  }
-
-  .marquee::before,
-  .marquee::after {
-    width: 5rem;
-  }
-}
-
+    .ai-answer { font-size: 1rem; line-height: 1.6; color: #e0e0e0; }
   </style>
 </head>
 <body>
-  <div class="logo-row">
-  <div class="marquee">
-    <ul class="marquee-content">
-      <li><img src="https://cdn.simpleicons.org/github/000" alt="GitHub"></li>
-      <li><img src="https://cdn.simpleicons.org/codepen/000" alt="CodePen"></li>
-      <li><img src="https://cdn.simpleicons.org/react/000" alt="React"></li>
-      <li><img src="https://cdn.simpleicons.org/vueDotJs/000" alt="Vue"></li>
-      <li><img src="https://cdn.simpleicons.org/wordpress/000" alt="WordPress"></li>
-      <li><img src="https://cdn.simpleicons.org/android/000" alt="Android"></li>
-    </ul>
-  </div>
-</div>
 
-<div class="logo-row">
-  <div class="marquee reverse">
-    <ul class="marquee-content">
-      <li><img src="https://cdn.simpleicons.org/figma/000" alt="Figma"></li>
-      <li><img src="https://cdn.simpleicons.org/javascript/000" alt="JavaScript"></li>
-      <li><img src="https://cdn.simpleicons.org/docker/000" alt="Docker"></li>
-      <li><img src="https://cdn.simpleicons.org/notion/000" alt="Notion"></li>
-      <li><img src="https://cdn.simpleicons.org/jira/000" alt="Jira"></li>
-      <li><img src="https://cdn.simpleicons.org/slack/000" alt="Slack"></li>
-    </ul>
-  </div>
-</div>
+  <section class="ai-knowledge-section">
+    <div class="ai-container">
+      <div class="ai-header">
+        <h1>AI KNOWLEDGE CENTER</h1>
+        <p class="subtitle">Essential Artificial Intelligence Concepts Explained</p>
+      </div>
 
+      <div class="ai-grid" id="ai-faq">
+        
+        <div class="ai-card">
+          <button class="ai-toggle" aria-expanded="false" aria-controls="ai-c1">
+            <div class="ai-question">Who is known as the father of Artificial Intelligence?</div>
+            <span class="ai-icon" aria-hidden="true">+</span>
+          </button>
+          <div id="ai-c1" class="ai-panel" role="region">
+            <div class="ai-inner">
+              <p class="ai-answer"><strong>John McCarthy</strong> coined the term AI in 1956 and organized the Dartmouth Conference.</p>
+            </div>
+          </div>
+        </div>
 
-<script>
-  document.querySelectorAll('.marquee').forEach((marquee) => {
-    const root = document.documentElement;
-    const displayed = getComputedStyle(root).getPropertyValue("--marquee-elements-displayed");
-    const content = marquee.querySelector(".marquee-content");
+        <div class="ai-card">
+          <button class="ai-toggle" aria-expanded="false" aria-controls="ai-c2">
+            <div class="ai-question">What does NLP stand for in AI?</div>
+            <span class="ai-icon" aria-hidden="true">+</span>
+          </button>
+          <div id="ai-c2" class="ai-panel" role="region">
+            <div class="ai-inner">
+              <p class="ai-answer"><strong>Natural Language Processing</strong> helps computers understand and generate human language.</p>
+            </div>
+          </div>
+        </div>
 
-    root.style.setProperty("--marquee-elements", content.children.length);
+        <div class="ai-card">
+          <button class="ai-toggle" aria-expanded="false" aria-controls="ai-c3">
+            <div class="ai-question">Which AI model is famous for image recognition?</div>
+            <span class="ai-icon" aria-hidden="true">+</span>
+          </button>
+          <div id="ai-c3" class="ai-panel" role="region">
+            <div class="ai-inner">
+              <p class="ai-answer"><strong>Convolutional Neural Networks (CNNs)</strong> are the backbone of modern image recognition.</p>
+            </div>
+          </div>
+        </div>
 
-    for (let i = 0; i < displayed; i++) {
-      content.appendChild(content.children[i].cloneNode(true));
-    }
-  });
-</script>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('ai-faq');
+
+      grid.addEventListener('click', (e) => {
+        const btn = e.target.closest('.ai-toggle');
+        if (!btn) return;
+
+        const card = btn.parentElement;
+        const panel = card.querySelector('.ai-panel');
+        const isOpen = card.classList.contains('active');
+
+        // Close other cards
+        grid.querySelectorAll('.ai-card.active').forEach(openCard => {
+          if (openCard === card) return;
+          collapse(openCard.querySelector('.ai-panel'), openCard);
+        });
+
+        // Toggle clicked card
+        if (isOpen) {
+          collapse(panel, card);
+        } else {
+          expand(panel, card);
+        }
+      });
+
+      function collapse(panel, card) {
+        panel.style.height = panel.scrollHeight + 'px';
+        requestAnimationFrame(() => { panel.style.height = '0px'; });
+        card.classList.remove('active');
+        card.querySelector('.ai-toggle').setAttribute('aria-expanded', 'false');
+      }
+
+      function expand(panel, card) {
+        panel.style.height = panel.scrollHeight + 'px';
+        panel.addEventListener('transitionend', function onEnd(ev) {
+          if (ev.propertyName === 'height') {
+            panel.style.height = 'auto';
+            panel.removeEventListener('transitionend', onEnd);
+          }
+        });
+        card.classList.add('active');
+        card.querySelector('.ai-toggle').setAttribute('aria-expanded', 'true');
+      }
+
+      // Start all closed
+      document.querySelectorAll('.ai-panel').forEach(p => { p.style.height = '0px'; });
+    });
+  </script>
 </body>
 </html>

@@ -1,167 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Learn AI</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .hero {
+      margin-top: 0 !important;
+    }
+
+    @media (max-width: 991px) {
+      nav.navbar {
+        position: static !important;
+      }
+
+      body {
+        padding-top: 0 !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 40px 5% !important;
+      }
+
+      .matrix-box {
+        margin-top: 20px;
+      }
+
+      .faq-header {
+        flex-direction: column !important;
+        gap: 10px !important;
+      }
+
+      .faq-title {
+        font-size: 1.5rem !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <!-- Navbar -->
-  <nav>
-    <h1>Technology Garage</h1>
-    <button>Get Started</button>
-  </nav>
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-text">
-      <h1>
-        <span class="highlight">Learn AI,</span><br>
-        <span class="highlight">Fast & Fun</span>
-      </h1>
-      <p>
-        A modern curriculum mixing theory, code, and real projects. 
-        Built with effects inspired by GitHub, Grok, and the best of the modern web.
-      </p>
-      <div class="buttons">
-        <button class="btn btn-primary">Start Now</button>
-        <button class="btn btn-secondary">View Repo</button>
+  <nav class="navbar navbar-light bg-white px-4 py-1 shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="TG-Dark.png" alt="Logo" width="200" class="me-2" />
+      </a>
+      <!-- Hamburger for mobile -->
+      <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Normal desktop menu -->
+      <div class="d-none d-lg-flex">
+        <ul class="navbar-nav flex-row gap-4">
+          <li class="nav-item"><a class="nav-link text-dark fw-semibold" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link text-dark fw-semibold" href="#">Courses</a></li>
+          <li class="nav-item"><a class="nav-link text-dark fw-semibold" href="#">About</a></li>
+          <li class="nav-item"><a class="nav-link text-dark fw-semibold" href="#">Contact</a></li>
+        </ul>
       </div>
     </div>
+  </nav>
 
-    <div class="matrix-box">
-      <canvas id="matrix"></canvas>
+  <!-- Offcanvas Side Nav -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Technology Garage</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Courses</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CTA Banner -->
+  <div id="ctaBanner" class="cta-banner">
+    <div class="text-center py-3">
+      <p class="mb-2 text-light fw-semibold">START YOUR JOURNEY WITH US</p>
+      <a href="#" class="btn btn-primary rounded-pill px-4 openFormBtn">ENROLL</a>
+    </div>
+  </div>
+
+  <div class="cursor"></div>
+
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">Learn AI,<br>Fast & Fun</h1>
+        <p class="hero-paragraph">
+          Don't wait to start your AI adventure. Our courses are crafted to be engaging, practical, and effective. Dive
+          in and see how quickly you can master the skills of tomorrow.
+        </p>
+        <a href="#" class="cta-button">
+          <span>Discover More</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12h14m-7-7l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="matrix-container" id="matrixBox">
+        <div class="matrix-rain" id="matrixRain"></div>
+      </div>
     </div>
   </section>
 
-    <div class="logo-row">
+  <section class="marquee-section">
+    <!-- First Row -->
     <div class="marquee">
-        <ul class="marquee-content">
-        <li><img src="https://cdn.simpleicons.org/github/000" alt="GitHub"></li>
-        <li><img src="https://cdn.simpleicons.org/codepen/000" alt="CodePen"></li>
-        <li><img src="https://cdn.simpleicons.org/react/000" alt="React"></li>
-        <li><img src="https://cdn.simpleicons.org/vueDotJs/000" alt="Vue"></li>
-        <li><img src="https://cdn.simpleicons.org/wordpress/000" alt="WordPress"></li>
-        <li><img src="https://cdn.simpleicons.org/android/000" alt="Android"></li>
-        </ul>
-    </div>
+      <ul class="marquee-content">
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/github.svg" alt="GitHub"></li>
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/react.svg" alt="React"></li>
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/javascript.svg" alt="JavaScript"></li>
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/python.svg" alt="Python"></li>
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/docker.svg" alt="Docker"></li>
+        <!-- Duplicate for seamless loop -->
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/github.svg" alt="GitHub"></li>
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/react.svg" alt="React"></li>
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/javascript.svg" alt="JavaScript"></li>
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/python.svg" alt="Python"></li>
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/docker.svg" alt="Docker"></li>
+      </ul>
     </div>
 
-    <div class="logo-row">
+    <!-- Second Row -->
     <div class="marquee reverse">
-        <ul class="marquee-content">
-        <li><img src="https://cdn.simpleicons.org/figma/000" alt="Figma"></li>
-        <li><img src="https://cdn.simpleicons.org/javascript/000" alt="JavaScript"></li>
-        <li><img src="https://cdn.simpleicons.org/docker/000" alt="Docker"></li>
-        <li><img src="https://cdn.simpleicons.org/notion/000" alt="Notion"></li>
-        <li><img src="https://cdn.simpleicons.org/jira/000" alt="Jira"></li>
-        <li><img src="https://cdn.simpleicons.org/slack/000" alt="Slack"></li>
-        </ul>
+      <ul class="marquee-content">
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/figma.svg" alt="Figma"></li>
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/tensorflow.svg" alt="TensorFlow"></li>
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/wordpress.svg" alt="WordPress"></li>
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/slack.svg" alt="Slack"></li>
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/jira.svg" alt="Jira"></li>
+        <!-- Duplicate for seamless loop -->
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/figma.svg" alt="Figma"></li>
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/tensorflow.svg" alt="TensorFlow"></li>
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/wordpress.svg" alt="WordPress"></li>
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/slack.svg" alt="Slack"></li>
+        <li><img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/jira.svg" alt="Jira"></li>
+      </ul>
     </div>
-    </div>
+  </section>
 
+  <section class="ai-knowledge-section">
+    <div class="ai-container">
+      <div class="ai-header">
+        <h1>AI KNOWLEDGE CENTER</h1>
+        <p class="subtitle">Essential Artificial Intelligence Concepts Explained</p>
+      </div>
 
-  <div class="faq-container">
+      <div class="ai-grid" id="ai-faq">
         
-        <div class="faq-header">
-            <button class="faq-button">FAQ</button>
-            <div>
-                <h1 class="faq-title"> FAQ</h1>
-                <p class="faq-subtitle">Your most important questions regarding answered here.</p>
+        <div class="ai-card">
+          <button class="ai-toggle" aria-expanded="false" aria-controls="ai-c1">
+            <div class="ai-question">Who is known as the father of Artificial Intelligence?</div>
+            <span class="ai-icon" aria-hidden="true">+</span>
+          </button>
+          <div id="ai-c1" class="ai-panel" role="region">
+            <div class="ai-inner">
+              <p class="ai-answer"><strong>John McCarthy</strong> coined the term AI in 1956 and organized the Dartmouth Conference.</p>
             </div>
+          </div>
         </div>
 
-        <div class="faq-list">
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>What is Artificial Intelligence (AI)?</span>
-                    <button class="faq-toggle">&times;</button>
-                </div>
-                <div class="faq-answer">
-                    <p>Artificial Intelligence (AI) is the simulation of human intelligence in machines that are programmed to think, learn, and solve problems like humans.</p>
-                </div>
+        <div class="ai-card">
+          <button class="ai-toggle" aria-expanded="false" aria-controls="ai-c2">
+            <div class="ai-question">What does NLP stand for in AI?</div>
+            <span class="ai-icon" aria-hidden="true">+</span>
+          </button>
+          <div id="ai-c2" class="ai-panel" role="region">
+            <div class="ai-inner">
+              <p class="ai-answer"><strong>Natural Language Processing</strong> helps computers understand and generate human language.</p>
             </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>What is Machine Learning?</span>
-                    <button class="faq-toggle">&times;</button>
-                </div>
-                <div class="faq-answer">
-                    <p>Machine Learning is a subset of AI that enables systems to learn from data and improve their performance without explicit programming.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>What is Deep Learning?</span>
-                    <button class="faq-toggle">&times;</button>
-                </div>
-                <div class="faq-answer">
-                    <p>Deep Learning is a branch of Machine Learning that uses neural networks with many layers to analyze complex data patterns.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>How can I start learning AI?</span>
-                    <button class="faq-toggle">&times;</button>
-                </div>
-                <div class="faq-answer">
-                    <p>Start with basic math (linear algebra, calculus, probability), learn Python, and explore online courses on AI and machine learning.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>What programming languages are used in AI?</span>
-                    <button class="faq-toggle">&times;</button>
-                </div>
-                <div class="faq-answer">
-                    <p>Python is the most popular language for AI, but R, Java, and Julia are also used in some applications.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>What are some good resources to learn AI?</span>
-                    <button class="faq-toggle">&times;</button>
-                </div>
-                <div class="faq-answer">
-                    <p>Great resources include Coursera, edX, fast.ai, DeepLearning.AI, YouTube tutorials, and books like "Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow".</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>Do I need a strong math background for AI?</span>
-                    <button class="faq-toggle">&times;</button>
-                </div>
-                <div class="faq-answer">
-                    <p>A basic understanding of math helps, especially linear algebra, calculus, and probability, but many beginner courses teach the essentials as you go.</p>
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFAQ(this)">
-                    <span>What is a neural network?</span>
-                    <button class="faq-toggle">&times;</button>
-                </div>
-                <div class="faq-answer">
-                    <p>A neural network is a computational model inspired by the human brain, consisting of layers of interconnected nodes that process data and learn patterns.</p>
-                </div>
-            </div>
+          </div>
         </div>
+
+        <div class="ai-card">
+          <button class="ai-toggle" aria-expanded="false" aria-controls="ai-c3">
+            <div class="ai-question">Which AI model is famous for image recognition?</div>
+            <span class="ai-icon" aria-hidden="true">+</span>
+          </button>
+          <div id="ai-c3" class="ai-panel" role="region">
+            <div class="ai-inner">
+              <p class="ai-answer"><strong>Convolutional Neural Networks (CNNs)</strong> are the backbone of modern image recognition.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
+  </section>
+
+  <footer class="bg-light py-5">
+    <div class="container">
+      <div class="row align-items-start">
+
+        <!-- Left: Logo & Text -->
+        <div class="col-md-4 text-center text-md-start mb-4 mb-md-0">
+          <img src="TG-Dark.png" alt="Logo" class="footer-logo mb-2" />
+        </div>
+
+        <!-- Center: Contact Form -->
+        <div class="col-md-4 text-center mb-4 mb-md-0">
+          <h5 class="fw-bold mb-3 ft-title">GET IN TOUCH</h5>
+
+          <div class="footer-contact-group d-flex justify-content-center align-items-center">
+
+            <!-- Country Code -->
+            <select class="form-select footer-select option-select">
+              <option selected value="+91">IN +91</option>
+              <option value="+1">US +1</option>
+              <option value="+65">SG +65</option>
+            </select>
+
+            <!-- Input -->
+            <input type="text" class="form-control footer-input" placeholder="Enter Phone Number" />
+
+            <!-- Submit -->
+            <button class="footer-button">Submit</button>
+          </div>
+        </div>
+
+        <!-- Right: Social -->
+        <div class="col-md-4 text-center text-md-end">
+          <p class="text-muted">Connect with social</p>
+          <div class="d-flex justify-content-center justify-content-md-end gap-3 fs-5 footer-socials">
+            <a href="https://www.facebook.com/Technology.Garage.Trichy/"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/technology.garagetrichy/"><i class="bi bi-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="mb-0 text-muted copyright">© Copyright 2025 <strong><u>Technology Garage</u></strong></p>
+  </footer>
 
   <script src="script.js"></script>
-  <script>
-    document.querySelectorAll('.marquee').forEach((marquee) => {
-    const root = document.documentElement;
-    const displayed = getComputedStyle(root).getPropertyValue("--marquee-elements-displayed");
-    const content = marquee.querySelector(".marquee-content");
 
-    root.style.setProperty("--marquee-elements", content.children.length);
 
-    for (let i = 0; i < displayed; i++) {
-      content.appendChild(content.children[i].cloneNode(true));
-    }
-  });
-  </script>
+</body>
 
-  </body>
 </html>
