@@ -1,183 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Knowledge Center</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      margin: 0;
-      background-color: #0d0d0d;
-      color: #fff;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Scroll List</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #121212;
+            color: #ccc;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .ai-knowledge-section {
-      padding: 80px 20px;
-      background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
-    }
+        .scroller {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 2rem 0.5rem;
+            background: linear-gradient(90deg, #181818 0%, #232323 100%);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+            max-width: 100vw;
+            width: 100%;
+            margin: 0 auto;
+            scrollbar-width: thin;
+            scrollbar-color: #888 #222;
+        }
 
-    .ai-container {
-      max-width: 1200px;
-      margin: auto;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(10px);
-    }
+        .scroller::-webkit-scrollbar {
+            height: 10px;
+            background: #222;
+            border-radius: 8px;
+        }
 
-    .ai-header { text-align: center; margin-bottom: 40px; }
-    .ai-header h1 {
-      font-size: clamp(1.8rem, 5vw, 2.8rem);
-      font-weight: 700;
-    }
-    .ai-header .subtitle {
-      font-size: clamp(0.9rem, 2vw, 1.1rem);
-      color: #b0b0b0;
-      margin-top: 10px;
-      font-weight: 300;
-    }
+        .scroller::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 8px;
+            border: 2px solid #222;
+        }
 
-    .ai-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 20px;
-    }
+        .scroller::-webkit-scrollbar-track {
+            background: #222;
+            border-radius: 8px;
+        }
 
-    .ai-card {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    }
+        ol,
+        ul {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+            padding-left: 0;
+            counter-reset: list-item;
+            perspective: 9000px;
+            transform-style: preserve-3d;
+            perspective-origin: 50% 50%;
+        }
 
-    .ai-toggle {
-      width: 100%; padding: 20px;
-      background: transparent; border: none; color: #fff;
-      font-weight: 600; text-align: left; cursor: pointer;
-      display: flex; justify-content: space-between; align-items: center;
-      transition: color .25s ease;
-    }
-    .ai-toggle:hover { color: #87ceeb; }
+        ol > li,
+        ul > li {
+            flex: 1 1 240px;
+            min-width: 240px;
+            border: 1px solid #444;
+            padding: 1rem;
+            animation: auto ease-in-out intro forwards,
+                auto ease-in-out outro forwards;
+            animation-timeline: view(inline);
+            animation-range: entry, exit;
+            transform-origin: bottom center;
+        }
 
-    .ai-icon {
-      font-size: 1.5rem; font-weight: 300;
-      transition: transform .25s ease, color .25s ease; color: #87ceeb;
-    }
-    .ai-card.active .ai-icon { transform: rotate(45deg); color: #1e90ff; }
+        ol p,
+        ol h2,
+        ul p,
+        ul h2 {
+            margin-top: 1rem;
+            margin-bottom: 0;
+        }
 
-    .ai-panel {
-      height: 0; overflow: hidden;
-      background: rgba(0, 0, 0, 0.2);
-      transition: height .35s ease;
-    }
-    .ai-panel .ai-inner { padding: 20px; box-sizing: border-box; }
+        ol h2,
+        ul h2 {
+            color: #888;
+            font-weight: normal;
+        }
 
-    .ai-answer { font-size: 1rem; line-height: 1.6; color: #e0e0e0; }
-  </style>
+        ol > li {
+            display: flex;
+            flex-direction: column;
+            color: #ccc;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        ol > li::before {
+            counter-increment: list-item;
+            content: counter(list-item) ".";
+            font-size: 5em;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 1rem;
+            line-height: 1;
+            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+        }
+
+        ol > li::after {
+            content: "";
+            background: linear-gradient(45deg, 
+                rgba(255, 255, 255, 0.1) 0%, 
+                rgba(255, 255, 255, 0.05) 25%, 
+                rgba(0, 0, 0, 0.3) 50%, 
+                rgba(255, 255, 255, 0.05) 75%, 
+                rgba(255, 255, 255, 0.1) 100%);
+            position: absolute;
+            inset: -20px;
+            background-size: 200% 200%;
+            transform: scale(1);
+            transition: transform 0.5s ease-out, opacity 0.4s linear, background-position 0.5s ease;
+            opacity: 0;
+            z-index: -1;
+        }
+
+        ol > li:hover {
+            color: #fff;
+        }
+
+        ol > li:hover::after {
+            transform: scale(1.1) rotate(4deg);
+            opacity: 0.6;
+            background-position: 100% 100%;
+        }
+
+        @keyframes intro {
+            from {
+                transform-origin: center left;
+                opacity: 0;
+                scale: 0;
+            }
+            to {
+                transform-origin: center left;
+                opacity: 1;
+                scale: 1;
+            }
+        }
+
+        @keyframes outro {
+            from {
+                transform-origin: center right;
+                opacity: 1;
+                scale: 1;
+            }
+            to {
+                transform-origin: center right;
+                opacity: 0;
+                scale: 0;
+            }
+        }
+
+        /* Responsive: stack cards vertically on mobile */
+        @media (max-width: 600px) {
+            ol, ul {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .scroller {
+                padding: 1rem 0.2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-
-  <section class="ai-knowledge-section">
-    <div class="ai-container">
-      <div class="ai-header">
-        <h1>AI KNOWLEDGE CENTER</h1>
-        <p class="subtitle">Essential Artificial Intelligence Concepts Explained</p>
-      </div>
-
-      <div class="ai-grid" id="ai-faq">
-        
-        <div class="ai-card">
-          <button class="ai-toggle" aria-expanded="false" aria-controls="ai-c1">
-            <div class="ai-question">Who is known as the father of Artificial Intelligence?</div>
-            <span class="ai-icon" aria-hidden="true">+</span>
-          </button>
-          <div id="ai-c1" class="ai-panel" role="region">
-            <div class="ai-inner">
-              <p class="ai-answer"><strong>John McCarthy</strong> coined the term AI in 1956 and organized the Dartmouth Conference.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="ai-card">
-          <button class="ai-toggle" aria-expanded="false" aria-controls="ai-c2">
-            <div class="ai-question">What does NLP stand for in AI?</div>
-            <span class="ai-icon" aria-hidden="true">+</span>
-          </button>
-          <div id="ai-c2" class="ai-panel" role="region">
-            <div class="ai-inner">
-              <p class="ai-answer"><strong>Natural Language Processing</strong> helps computers understand and generate human language.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="ai-card">
-          <button class="ai-toggle" aria-expanded="false" aria-controls="ai-c3">
-            <div class="ai-question">Which AI model is famous for image recognition?</div>
-            <span class="ai-icon" aria-hidden="true">+</span>
-          </button>
-          <div id="ai-c3" class="ai-panel" role="region">
-            <div class="ai-inner">
-              <p class="ai-answer"><strong>Convolutional Neural Networks (CNNs)</strong> are the backbone of modern image recognition.</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
+    <div class="scroller">
+        <ol>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?1)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim asperiores ab incidunt earum nobis ex similique laboriosam, suscipit sunt eius, quisquam porro quod velit maxime nisi non perferendis animi id?</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?2)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem quidem esse placeat voluptates at ducimus odit blanditiis minima omnis, nesciunt eveniet hic ea fuga modi amet iure quos facere sapiente.</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?3)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam voluptate ipsam, at reiciendis dignissimos, enim voluptates, fuga expedita illum labore aperiam minima quidem atque. Placeat consectetur possimus rem dolor porro.</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?4)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum necessitatibus debitis ad possimus aliquam nisi ex eos! Velit autem consequatur eius asperiores corporis sapiente repellendus unde nobis voluptatem, quod nihil.</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?5)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis fugit praesentium perspiciatis voluptatibus quibusdam quidem velit? Fugiat harum repellat provident minima quasi. Praesentium modi ea, nostrum fugit nisi vel maiores.</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?6)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim natus quos repudiandae? Vitae repellat totam earum ducimus. Harum perferendis, temporibus dicta quos, error nam assumenda deserunt natus non nostrum accusantium.</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?7)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quia alias maiores laudantium dolor veniam consequuntur dicta, cumque voluptatum magni doloribus impedit, quos, quo aperiam quaerat sunt expedita officia voluptatibus nulla!</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?8)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus consectetur fuga ducimus excepturi ut iste asperiores saepe, quasi maxime, hic in repellendus impedit fugit laboriosam debitis eveniet? Neque, mollitia temporibus!</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?9)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed rerum ratione saepe tempore commodi asperiores eligendi nemo labore dicta quibusdam, iusto nihil quisquam veniam corrupti. Magnam, ad odit! Tempora, explicabo?</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?1)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim asperiores ab incidunt earum nobis ex similique laboriosam, suscipit sunt eius, quisquam porro quod velit maxime nisi non perferendis animi id?</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?2)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem quidem esse placeat voluptates at ducimus odit blanditiis minima omnis, nesciunt eveniet hic ea fuga modi amet iure quos facere sapiente.</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?3)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam voluptate ipsam, at reiciendis dignissimos, enim voluptates, fuga expedita illum labore aperiam minima quidem atque. Placeat consectetur possimus rem dolor porro.</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?4)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum necessitatibus debitis ad possimus aliquam nisi ex eos! Velit autem consequatur eius asperiores corporis sapiente repellendus unde nobis voluptatem, quod nihil.</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?5)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis fugit praesentium perspiciatis voluptatibus quibusdam quidem velit? Fugiat harum repellat provident minima quasi. Praesentium modi ea, nostrum fugit nisi vel maiores.</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?6)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim natus quos repudiandae? Vitae repellat totam earum ducimus. Harum perferendis, temporibus dicta quos, error nam assumenda deserunt natus non nostrum accusantium.</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?7)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quia alias maiores laudantium dolor veniam consequuntur dicta, cumque voluptatum magni doloribus impedit, quos, quo aperiam quaerat sunt expedita officia voluptatibus nulla!</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?8)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus consectetur fuga ducimus excepturi ut iste asperiores saepe, quasi maxime, hic in repellendus impedit fugit laboriosam debitis eveniet? Neque, mollitia temporibus!</p>
+            </li>
+            <li style="--bg: url(https://spaceholder.cc/i/600x800?9)">
+                <h2>Heading</h2>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed rerum ratione saepe tempore commodi asperiores eligendi nemo labore dicta quibusdam, iusto nihil quisquam veniam veniam corrupti. Magnam, ad odit! Tempora, explicabo?</p>
+            </li>
+        </ol>
     </div>
-  </section>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const grid = document.getElementById('ai-faq');
-
-      grid.addEventListener('click', (e) => {
-        const btn = e.target.closest('.ai-toggle');
-        if (!btn) return;
-
-        const card = btn.parentElement;
-        const panel = card.querySelector('.ai-panel');
-        const isOpen = card.classList.contains('active');
-
-        // Close other cards
-        grid.querySelectorAll('.ai-card.active').forEach(openCard => {
-          if (openCard === card) return;
-          collapse(openCard.querySelector('.ai-panel'), openCard);
-        });
-
-        // Toggle clicked card
-        if (isOpen) {
-          collapse(panel, card);
-        } else {
-          expand(panel, card);
-        }
-      });
-
-      function collapse(panel, card) {
-        panel.style.height = panel.scrollHeight + 'px';
-        requestAnimationFrame(() => { panel.style.height = '0px'; });
-        card.classList.remove('active');
-        card.querySelector('.ai-toggle').setAttribute('aria-expanded', 'false');
-      }
-
-      function expand(panel, card) {
-        panel.style.height = panel.scrollHeight + 'px';
-        panel.addEventListener('transitionend', function onEnd(ev) {
-          if (ev.propertyName === 'height') {
-            panel.style.height = 'auto';
-            panel.removeEventListener('transitionend', onEnd);
-          }
-        });
-        card.classList.add('active');
-        card.querySelector('.ai-toggle').setAttribute('aria-expanded', 'true');
-      }
-
-      // Start all closed
-      document.querySelectorAll('.ai-panel').forEach(p => { p.style.height = '0px'; });
-    });
-  </script>
 </body>
 </html>

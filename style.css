@@ -329,6 +329,165 @@ input[type="time"]:not(:focus):not(:valid)::before {
   }
 }
 
+.scroller-section .scroller {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2rem 0.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  max-width: 100vw;
+  width: 100%;
+  margin: 0 auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #222;
+}
+
+.scroller-section .scroller::-webkit-scrollbar {
+  height: 10px;
+  background: #222;
+  border-radius: 8px;
+}
+
+.scroller-section .scroller::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 8px;
+  border: 2px solid #222;
+}
+
+.scroller-section .scroller::-webkit-scrollbar-track {
+  background: #222;
+  border-radius: 8px;
+}
+
+.scroller-section ol, .scroller-section ul {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  padding-left: 0;
+  counter-reset: list-item;
+  perspective: 9000px;
+  transform-style: preserve-3d;
+  perspective-origin: 50% 50%;
+}
+
+.scroller-section ol>li,
+.scroller-section ul>li {
+  flex: 1 1 240px;
+  min-width: 240px;
+  border: 1px solid #444;
+  padding: 1rem;
+  animation: auto ease-in-out intro forwards,
+    auto ease-in-out outro forwards;
+  animation-timeline: view(inline);
+  animation-range: entry, exit;
+  transform-origin: bottom center;
+}
+
+.scroller-section ol p,
+.scroller-section ol h2,
+.scroller-section ul p,
+.scroller-section ul h2 {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+.scroller-section ol h2,
+.scroller-section ul h2 {
+  color: #888;
+  font-weight: normal;
+}
+
+.scroller-section ol>li {
+  display: flex;
+  flex-direction: column;
+  color: #ccc;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+.scroller-section ol>li::before {
+  counter-increment: list-item;
+  content: counter(list-item) ".";
+  font-size: 5em;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 1rem;
+  line-height: 1;
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+}
+
+.scroller-section ol>li::after {
+  content: "";
+  background: linear-gradient(45deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.05) 25%,
+      rgba(0, 0, 0, 0.3) 50%,
+      rgba(255, 255, 255, 0.05) 75%,
+      rgba(255, 255, 255, 0.1) 100%);
+  position: absolute;
+  inset: -20px;
+  background-size: 200% 200%;
+  transform: scale(1);
+  transition: transform 0.5s ease-out, opacity 0.4s linear, background-position 0.5s ease;
+  opacity: 0;
+  z-index: -1;
+}
+
+.scroller-section ol>li:hover {
+  color: #fff;
+}
+
+.scroller-section ol>li:hover::after {
+  transform: scale(1.1) rotate(4deg);
+  opacity: 0.6;
+  background-position: 100% 100%;
+}
+
+@keyframes intro {
+  from {
+    transform-origin: center left;
+    opacity: 0;
+    scale: 0;
+  }
+
+  to {
+    transform-origin: center left;
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes outro {
+  from {
+    transform-origin: center right;
+    opacity: 1;
+    scale: 1;
+  }
+
+  to {
+    transform-origin: center right;
+    opacity: 0;
+    scale: 0;
+  }
+}
+
+/* Responsive: stack cards vertically on mobile */
+@media (max-width: 600px) {
+
+  .scroller-section ol,
+  .scroller-section ul {
+    gap: 1.5rem;
+  }
+
+  .scroller-section .scroller {
+    padding: 1rem 0.2rem;
+  }
+}
+
+
 section.marquee-section {
   height: 40vh;
   display: flex;
@@ -428,7 +587,7 @@ section.marquee-section::after {
 
 .ai-container {
   max-width: 1200px;
-  margin: auto;
+  margin: 0 auto;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
@@ -596,7 +755,7 @@ footer .copyright {
     align-items: stretch;
   }
 
-  .cursor{
+  .cursor {
     display: none;
   }
 

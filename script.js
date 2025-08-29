@@ -67,49 +67,49 @@ document.addEventListener("mouseenter", () => {
 
 // FAQ Section
 document.addEventListener('DOMContentLoaded', () => {
-  const grid = document.getElementById('ai-faq');
+      const grid = document.getElementById('ai-faq');
 
-  grid.addEventListener('click', (e) => {
-    const btn = e.target.closest('.ai-toggle');
-    if (!btn) return;
+      grid.addEventListener('click', (e) => {
+        const btn = e.target.closest('.ai-toggle');
+        if (!btn) return;
 
-    const card = btn.parentElement;
-    const panel = card.querySelector('.ai-panel');
-    const isOpen = card.classList.contains('active');
+        const card = btn.parentElement;
+        const panel = card.querySelector('.ai-panel');
+        const isOpen = card.classList.contains('active');
 
-    // Close other cards
-    grid.querySelectorAll('.ai-card.active').forEach(openCard => {
-      if (openCard === card) return;
-      collapse(openCard.querySelector('.ai-panel'), openCard);
-    });
+        // Close other cards
+        grid.querySelectorAll('.ai-card.active').forEach(openCard => {
+          if (openCard === card) return;
+          collapse(openCard.querySelector('.ai-panel'), openCard);
+        });
 
-    // Toggle clicked card
-    if (isOpen) {
-      collapse(panel, card);
-    } else {
-      expand(panel, card);
-    }
-  });
+        // Toggle clicked card
+        if (isOpen) {
+          collapse(panel, card);
+        } else {
+          expand(panel, card);
+        }
+      });
 
-  function collapse(panel, card) {
-    panel.style.height = panel.scrollHeight + 'px';
-    requestAnimationFrame(() => { panel.style.height = '0px'; });
-    card.classList.remove('active');
-    card.querySelector('.ai-toggle').setAttribute('aria-expanded', 'false');
-  }
-
-  function expand(panel, card) {
-    panel.style.height = panel.scrollHeight + 'px';
-    panel.addEventListener('transitionend', function onEnd(ev) {
-      if (ev.propertyName === 'height') {
-        panel.style.height = 'auto';
-        panel.removeEventListener('transitionend', onEnd);
+      function collapse(panel, card) {
+        panel.style.height = panel.scrollHeight + 'px';
+        requestAnimationFrame(() => { panel.style.height = '0px'; });
+        card.classList.remove('active');
+        card.querySelector('.ai-toggle').setAttribute('aria-expanded', 'false');
       }
-    });
-    card.classList.add('active');
-    card.querySelector('.ai-toggle').setAttribute('aria-expanded', 'true');
-  }
 
-  // Start all closed
-  document.querySelectorAll('.ai-panel').forEach(p => { p.style.height = '0px'; });
-});
+      function expand(panel, card) {
+        panel.style.height = panel.scrollHeight + 'px';
+        panel.addEventListener('transitionend', function onEnd(ev) {
+          if (ev.propertyName === 'height') {
+            panel.style.height = 'auto';
+            panel.removeEventListener('transitionend', onEnd);
+          }
+        });
+        card.classList.add('active');
+        card.querySelector('.ai-toggle').setAttribute('aria-expanded', 'true');
+      }
+
+      // Start all closed
+      document.querySelectorAll('.ai-panel').forEach(p => { p.style.height = '0px'; });
+    });
