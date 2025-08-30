@@ -342,6 +342,28 @@ input[type="time"]:not(:focus):not(:valid)::before {
   scrollbar-color: #888 #222;
 }
 
+.scroller-title {
+  font-size: clamp(2.5rem, 6vw, 3rem);
+  font-weight: 800;
+  text-align: center;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #fff, #ccc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: 2rem;
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+.scroller-paragraph {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: #bbb;
+  max-width: 500px;
+  text-align: center;
+  margin: 0 auto;
+  animation: fadeInUp 1s ease-out 0.5s both;
+}
+
 .scroller-section .scroller::-webkit-scrollbar {
   height: 10px;
   background: #222;
@@ -359,7 +381,8 @@ input[type="time"]:not(:focus):not(:valid)::before {
   border-radius: 8px;
 }
 
-.scroller-section ol, .scroller-section ul {
+.scroller-section ol,
+.scroller-section ul {
   display: flex;
   gap: 1rem;
   list-style: none;
